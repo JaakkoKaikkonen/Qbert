@@ -145,7 +145,6 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="HUD.cpp" />
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Qbert.cpp" />
     <ClCompile Include="RedBall.cpp" />
@@ -163,7 +162,6 @@
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="HUD.hpp" />
-    <ClInclude Include="InputManager.hpp" />
     <ClInclude Include="Qbert.hpp" />
     <ClInclude Include="RedBall.hpp" />
     <ClInclude Include="Snake.hpp" />
