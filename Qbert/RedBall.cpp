@@ -1,6 +1,6 @@
 #include "RedBall.hpp"
 
-namespace engine {
+namespace Game {
 
 	RedBall::RedBall(gameDataRef data, int spawnDelay)
 		: Enemy(data, spawnDelay)

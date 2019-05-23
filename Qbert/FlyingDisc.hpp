@@ -5,7 +5,7 @@
 #include "Animation.hpp"
 #include "DEFINITIONS.hpp"
 
-namespace engine {
+namespace Game {
 
 	class FlyingDisc
 	{

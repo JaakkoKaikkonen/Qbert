@@ -4,7 +4,7 @@
 #include "Collision.hpp"
 
 
-namespace engine {
+namespace Game {
 
 	GameState::GameState(gameDataRef data)
 		: _data(data), _hud(data)

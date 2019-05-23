@@ -6,7 +6,7 @@
 #include "DEFINITIONS.hpp"
 #include <string>
 
-namespace engine {
+namespace Game {
 
 	class HUD
 	{

@@ -6,7 +6,7 @@
 #include "Box.hpp"
 #include <array>
 
-namespace engine {
+namespace Game {
 
 	class Enemy
 	{

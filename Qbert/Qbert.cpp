@@ -1,7 +1,7 @@
 #include "Qbert.hpp"
 
 
-namespace engine {
+namespace Game {
 
 	Qbert::Qbert(gameDataRef data)
 		: _data(data), _Qbert(_data->assets.getTexture("Qbert"), QBERT_FRONT_LEFT_JUMP), _swearSprite(_data->assets.getTexture("Swearing"))

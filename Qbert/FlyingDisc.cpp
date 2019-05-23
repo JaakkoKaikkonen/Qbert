@@ -1,6 +1,6 @@
 #include "FlyingDisc.hpp"
 
-namespace engine {
+namespace Game {
 
 	FlyingDisc::FlyingDisc(gameDataRef data, sf::Vector2f startPos)
 		: _data(data), _disc(_data->assets.getTexture("Flying_disc"), FLYING_DISC_01), _discAnimation(_disc, _discAnimationFrames, 4, 0.25f)

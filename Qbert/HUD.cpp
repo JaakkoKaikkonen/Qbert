@@ -1,6 +1,6 @@
 #include "HUD.hpp"
 
-namespace engine {
+namespace Game {
 
 	HUD::HUD(gameDataRef data)
 		: _data(data), _playerText(_data->assets.getTexture("Player_text"), PLAYER_TEXT_01), _playerTextAnimation(_playerText, _playerTextAnimationFrames, 6, 0.6f),

@@ -1,7 +1,7 @@
 #include "Snake.hpp"
 #include "Collision.hpp"
 
-namespace engine {
+namespace Game {
 
 	Snake::Snake(gameDataRef data, HUD* hud, int spawnDelay)
 		: Enemy(data, spawnDelay)

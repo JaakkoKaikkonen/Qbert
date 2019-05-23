@@ -7,7 +7,7 @@
 #include "DEFINITIONS.hpp"
 #include <array>
 
-namespace engine {
+namespace Game {
 
 	class Snake : public Enemy
 	{

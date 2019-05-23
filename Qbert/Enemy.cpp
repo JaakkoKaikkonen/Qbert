@@ -1,7 +1,7 @@
 #include "Enemy.hpp"
 #include "Collision.hpp"
 
-namespace engine {
+namespace Game {
 
 	Enemy::Enemy(gameDataRef data, int spawnDelay)
 		: _data(data)

@@ -1,6 +1,6 @@
 #include "Box.hpp"
 
-namespace engine {
+namespace Game {
 
 	Box::Box(gameDataRef data, sf::IntRect sprite, float x, float y)
 		: _data(data), _box(_data->assets.getTexture("Boxes"), sprite), _changeColorAnimation(_box, _changeColorAnimationFrames, 3, 0.25f)

@@ -5,7 +5,7 @@
 #include "DEFINITIONS.hpp"
 #include "Animation.hpp"
 
-namespace engine {
+namespace Game {
 
 	class Box
 	{

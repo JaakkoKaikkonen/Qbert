@@ -5,7 +5,7 @@
 #include "Enemy.hpp"
 #include "DEFINITIONS.hpp"
 
-namespace engine {
+namespace Game {
 
 	class RedBall : public Enemy
 	{
