@@ -25,8 +25,8 @@ namespace Game {
 		void init();
 
 		void handleInput();
-		void update(float dt);
-		void draw(float interpolation);
+		void update();
+		void draw();
 
 	private:
 		void newBoxHit();

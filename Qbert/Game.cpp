@@ -83,17 +83,13 @@ namespace Game {
 			while (accumulator >= dt)
 			{
 				this->_data->machine.getActiveState()->handleInput();
-				this->_data->machine.getActiveState()->update(dt);
+				this->_data->machine.getActiveState()->update();
+
+				this->_data->machine.getActiveState()->draw();
 
 				accumulator -= dt;
 			}
 
-			interpolation = accumulator / dt;
-
-			this->_data->machine.getActiveState()->draw(interpolation);
-
-
-			//std::cout << 1 / frameTime << std::endl;
 		}
 
 

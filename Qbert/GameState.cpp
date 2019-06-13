@@ -64,7 +64,7 @@ namespace Game {
 
 	}
 
-	void GameState::update(float dt) {
+	void GameState::update() {
 
 		if (_win) {
 
@@ -112,7 +112,7 @@ namespace Game {
 
 	}
 
-	void GameState::draw(float interpolation) {
+	void GameState::draw() {
 
 		_data->window.clear(_backGroundColor);
 
