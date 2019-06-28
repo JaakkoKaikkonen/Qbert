@@ -11,8 +11,6 @@ namespace Game {
 		icon.loadFromFile(TOP_ICON_FILEPATH);
 
 		_data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
-		//_data->window.setVerticalSyncEnabled(true);
-		//_data->window.setFramerateLimit(60);
 
 		_data->window.setPosition(sf::Vector2i(500, 200));
 
