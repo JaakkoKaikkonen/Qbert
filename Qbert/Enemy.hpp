@@ -25,36 +25,36 @@ namespace Game {
 
 		void fall();
 
-		void drop() { _fell = true; }
+		void setFell() { fell = true; }
 
-		bool fell() { return _fell; }
+		bool getFell() { return fell; }
 
-		sf::Sprite& getSprite() { return _enemy; }
+		sf::Sprite& getSprite() { return enemy; }
 
-		sf::Vector2f getPos() { return _enemy.getPosition(); }
+		sf::Vector2f getPos() { return enemy.getPosition(); }
 
-		sf::Rect<float> getGlobalBounds() { return _enemy.getGlobalBounds(); }
+		sf::Rect<float> getGlobalBounds() { return enemy.getGlobalBounds(); }
 	
 	protected:
-		gameDataRef _data;
+		gameDataRef data;
 
-		sf::Sprite _enemy;
+		sf::Sprite enemy;
 
-		int _jumpCounter = 0;
+		int jumpCounter = 0;
 
-		Dir _dir = Dir::Right;
+		Dir dir = Dir::Right;
 
-		int _moveTimer;
+		int moveTimer;
 
-		bool _drop = true;
+		bool drop = true;
 
-		bool _fell = false;
+		bool fell = false;
 
-		int _spawnCounter = 100;
+		int spawnCounter = 100;
 
-		int _spawnDelay;
+		int spawnDelay;
 
-		sf::Vector2f _jumpStartPos;
+		sf::Vector2f jumpStartPos;
 
 		float x, y;
 

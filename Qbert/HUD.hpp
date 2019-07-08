@@ -24,35 +24,35 @@ namespace Game {
 		void draw();
 
 	private:
-		gameDataRef _data;
+		gameDataRef data;
 
-		sf::Sprite _playerText;
+		sf::Sprite playerText;
 
-		sf::IntRect _playerTextAnimationFrames[6] = { PLAYER_TEXT_01, PLAYER_TEXT_02, PLAYER_TEXT_03, PLAYER_TEXT_04, PLAYER_TEXT_05, PLAYER_TEXT_06 };
+		sf::IntRect playerTextAnimationFrames[6] = { PLAYER_TEXT_01, PLAYER_TEXT_02, PLAYER_TEXT_03, PLAYER_TEXT_04, PLAYER_TEXT_05, PLAYER_TEXT_06 };
 
-		Animation _playerTextAnimation;
+		Animation playerTextAnimation;
 
-		sf::Sprite _playerIndex;
+		sf::Sprite playerIndex;
 
-		sf::IntRect _playerIndexAnimationFrames[3] = { PLAYER_INDEX_YELLOW, PLAYER_INDEX_BLUE, PLAYER_INDEX_RED };
+		sf::IntRect playerIndexAnimationFrames[3] = { PLAYER_INDEX_YELLOW, PLAYER_INDEX_BLUE, PLAYER_INDEX_RED };
 
-		Animation _playerIndexAnimation;
+		Animation playerIndexAnimation;
 
-		sf::Text _score;
+		sf::Text score;
 
-		sf::Text _changeTo;
+		sf::Text changeTo;
 
-		sf::Sprite _changeToBox;
+		sf::Sprite changeToBox;
 
-		sf::IntRect _changeToBoxAnimationFrames[3] = { CHANGE_TO_BOX_BLUE, CHANGE_TO_BOX_RED, CHANGE_TO_BOX_YELLOW };
+		sf::IntRect changeToBoxAnimationFrames[3] = { CHANGE_TO_BOX_BLUE, CHANGE_TO_BOX_RED, CHANGE_TO_BOX_YELLOW };
 
-		Animation _changeToBoxAnimation;
+		Animation changeToBoxAnimation;
 
-		sf::Sprite _arrows[4];
+		sf::Sprite arrows[4];
 
-		int _arrowCount = 0;
+		int arrowCount = 0;
 
-		int _arrowTimer = 0;
+		int arrowTimer = 0;
 
 	};
 

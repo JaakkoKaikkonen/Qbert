@@ -7,20 +7,21 @@
 namespace Game {
 
 	GameState::GameState(gameDataRef data)
-		: _data(data), _hud(data)
+		: data(data),
+		  hud(data)
 	{
 	}
 
 	void GameState::init() {
 
-		_data->assets.getSound("Start").play();
+		data->assets.getSound("Start").play();
 
 		int rowSize = 1;
-		for (int i = 0; i < _boxes.size();) {
+		for (int i = 0; i < boxes.size();) {
 			for (int j = 0; j < rowSize;) {
-				_boxes[i] = new Box(_data, BLUE_BOX, 
-								    SCREEN_WIDTH / 2 + j * TILESIZE - rowSize * TILESIZE/2 + TILESIZE / 2, //x
-									SCREEN_HEIGHT * 0.18f + rowSize * TILESIZE*0.75f); //y
+				boxes[i] = new Box(data, BLUE_BOX, 
+								   SCREEN_WIDTH / 2 + j * TILESIZE - rowSize * TILESIZE/2 + TILESIZE / 2, //x
+								   SCREEN_HEIGHT * 0.18f + rowSize * TILESIZE*0.75f); //y
 				j++;
 				i++;
 				if (j == rowSize) {
@@ -30,35 +31,35 @@ namespace Game {
 			}
 		}
 
-		_Qbert = new Qbert(_data);
+		qbert = new Qbert(data);
 
-		_snake = new Snake(_data, &_hud, 70);
+		snake = new Snake(data, &hud, 70);
 
-		_redBalls[0] = new RedBall(_data, 200);
-		_redBalls[1] = new RedBall(_data, 400);
+		redBalls[0] = new RedBall(data, 200);
+		redBalls[1] = new RedBall(data, 400);
 
-		_discs[0] = new FlyingDisc(_data, FLYING_DISC_POSITION_01);
-		_discs[1] = new FlyingDisc(_data, FLYING_DISC_POSITION_02);
+		discs[0] = new FlyingDisc(data, FLYING_DISC_POSITION_01);
+		discs[1] = new FlyingDisc(data, FLYING_DISC_POSITION_02);
 		
 	}
 
 	void GameState::handleInput() {
 		sf::Event event;
-		while (_data->window.pollEvent(event)) {
+		while (data->window.pollEvent(event)) {
 			if (sf::Event::Closed == event.type) {
-				_data->window.close();
+				data->window.close();
 			}
 		}
 
-		if (!_Qbert->getSwear() && !_win && !_onDisc[0] && !_onDisc[1]) {
+		if (!qbert->getSwear() && !won && !onDisc[0] && !onDisc[1]) {
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				_Qbert->move(Dir::Up);
+				qbert->move(Dir::Up);
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				_Qbert->move(Dir::Down);
+				qbert->move(Dir::Down);
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				_Qbert->move(Dir::Right);
+				qbert->move(Dir::Right);
 			} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				_Qbert->move(Dir::Left);
+				qbert->move(Dir::Left);
 			}
 		}
 
@@ -66,19 +67,19 @@ namespace Game {
 
 	void GameState::update() {
 
-		if (_win) {
+		if (won) {
 
 			this->win();
 
 		} else {
 
-			if (!_Qbert->getSwear()) {
+			if (!qbert->getSwear()) {
 
-				if (_Qbert->fell()) {
+				if (qbert->getFell()) {
 
-					_Qbert->fall();
+					qbert->fall();
 
-					if (_Qbert->getPos().y > SCREEN_HEIGHT*1.5f) {
+					if (qbert->getPos().y > SCREEN_HEIGHT*1.5f) {
 						this->reset();
 					}
 
@@ -86,7 +87,7 @@ namespace Game {
 
 					this->updateDiscs();
 
-					_Qbert->update();
+					qbert->update();
 
 					this->checkMapCollision();
 
@@ -96,17 +97,17 @@ namespace Game {
 
 				this->updateEnemies();
 
-			} else if (_swearCounter <= 0) {
+			} else if (swearCounter <= 0) {
 
 				this->reset();
 
 			} else {
 
-				_swearCounter--;
+				swearCounter--;
 
 			}
 
-			_hud.update();
+			hud.update();
 			
 		}
 
@@ -114,70 +115,70 @@ namespace Game {
 
 	void GameState::draw() {
 
-		_data->window.clear(_backGroundColor);
+		data->window.clear(backGroundColor);
 
-		_discs[0]->draw();
-		_discs[1]->draw();
+		discs[0]->draw();
+		discs[1]->draw();
 
-		if (_snake->fell()) {
-			_snake->draw();
+		if (snake->getFell()) {
+			snake->draw();
 		}
 
-		if (_Qbert->fell() && !_Qbert->returnFellFromLastRow()) {
-			_Qbert->draw();
-			for (int i = 0; i < _boxes.size(); i++) {
-				_boxes[i]->draw();
+		if (qbert->getFell() && !qbert->getFellFromLastRow()) {
+			qbert->draw();
+			for (int i = 0; i < boxes.size(); i++) {
+				boxes[i]->draw();
 			}
 		} else {
-			for (int i = 0; i < _boxes.size(); i++) {
-				_boxes[i]->draw();
+			for (int i = 0; i < boxes.size(); i++) {
+				boxes[i]->draw();
 			}
-			_Qbert->draw();
+			qbert->draw();
 		}
 
 
-		if (!_snake->fell()) {
-			_snake->draw();
+		if (!snake->getFell()) {
+			snake->draw();
 		}
 
-		_redBalls[0]->draw();
-		_redBalls[1]->draw();
+		redBalls[0]->draw();
+		redBalls[1]->draw();
 
 
-		_hud.draw();
+		hud.draw();
 
-		_data->window.display();
+		data->window.display();
 	}
 
 
 
 
 	void GameState::newBoxHit() {
-		_boxesHit++;
-		_hud.addToScore(25);
-		if (_boxesHit == AMOUNT_OF_BOXES) {
-			_data->assets.getSound("Win").play();
-			_win = true;
+		boxesHit++;
+		hud.addToScore(25);
+		if (boxesHit == AMOUNT_OF_BOXES) {
+			data->assets.getSound("Win").play();
+			won = true;
 		}
 	}
 
 
 	void GameState::updateDiscs() {
 		for (int i = 0; i < 2; i++) {
-			if (_onDisc[i]) {
-				if (_discs[i]->move()) {
-					if (_backGroundColor.g > 0) {
-						_backGroundColor.g -= 25;
+			if (onDisc[i]) {
+				if (discs[i]->move()) {
+					if (backGroundColor.g > 0) {
+						backGroundColor.g -= 25;
 					}
-					_Qbert->setPos(_discs[i]->getPos() - sf::Vector2f(0.0f, 17.0f));
+					qbert->setPos(discs[i]->getPos() - sf::Vector2f(0.0f, 17.0f));
 				} else {
-					_Qbert->setPos(_Qbert->getPos() + sf::Vector2f(0.0f, 4.0f));
-					if (_Qbert->getPos().y > QBERT_START_POS.y) {
-						_Qbert->setPos(QBERT_START_POS);
-						if (_boxes[0]->changeColor()) {
+					qbert->setPos(qbert->getPos() + sf::Vector2f(0.0f, 4.0f));
+					if (qbert->getPos().y > QBERT_START_POS.y) {
+						qbert->setPos(QBERT_START_POS);
+						if (boxes[0]->changeColor()) {
 							this->newBoxHit();
 						}
-						_onDisc[i] = false;
+						onDisc[i] = false;
 					}
 				}
 			}
@@ -185,89 +186,89 @@ namespace Game {
 	}
 
 	void GameState::checkMapCollision() {
-		if (_Qbert->land()) {
+		if (qbert->land()) {
 			bool collided = false;
-			for (int i = 0; i < _boxes.size(); i++) {
-				if (_boxes[i]->contains(_Qbert->getPos() + sf::Vector2f(0.0f, _Qbert->getGlobalBounds().height*0.75f))) {
-					if (_boxes[i]->changeColor()) {
+			for (int i = 0; i < boxes.size(); i++) {
+				if (boxes[i]->contains(qbert->getPos() + sf::Vector2f(0.0f, qbert->getGlobalBounds().height*0.75f))) {
+					if (boxes[i]->changeColor()) {
 						this->newBoxHit();
 					}
-					_data->assets.getSound("Jump").play();
+					data->assets.getSound("Jump").play();
 					collided = true;
 					break;
 				}
 			}
 			for (int i = 0; i < 2; i++) {
-				if (_discs[i]->contains(_Qbert->getPos() + sf::Vector2f(0.0f, 30.0f))) {
-					_data->assets.getSound("Lift").play();
-					_onDisc[i] = true;
-					_backGroundColor.g = 250;
-					_Qbert->update();
-					_oldQbertPos = _Qbert->getPos();
+				if (discs[i]->contains(qbert->getPos() + sf::Vector2f(0.0f, 30.0f))) {
+					data->assets.getSound("Lift").play();
+					onDisc[i] = true;
+					backGroundColor.g = 250;
+					qbert->update();
+					oldQbertPos = qbert->getPos();
 					collided = true;
 				}
 			}
 			if (collided == false) {
-				_Qbert->drop();
-				_data->assets.getSound("Fall").play();
-				if (_Qbert->getPos().y > _boxes[_boxes.size() - 1]->getPos().y) {
-					_Qbert->fellFromLastRow();
+				qbert->setFell();
+				data->assets.getSound("Fall").play();
+				if (qbert->getPos().y > boxes[boxes.size() - 1]->getPos().y) {
+					qbert->setFellFromLastRow();
 				}
 			}
 		}
 	}
 
 	void GameState::checkEnemyCollision() {
-		if (Collision::checkSpriteCollision(_Qbert->getSprite(), 1.0f, _snake->getSprite(), 0.2f) ||
-			Collision::checkSpriteCollision(_Qbert->getSprite(), 1.0f, _redBalls[0]->getSprite(), 0.15f) ||
-			Collision::checkSpriteCollision(_Qbert->getSprite(), 1.0f, _redBalls[1]->getSprite(), 0.15f)) {
-			_Qbert->swear();
-			_data->assets.getSound("Swear").play();
-			_Qbert->update();
-			_swearCounter = 100;
+		if (Collision::checkSpriteCollision(qbert->getSprite(), 1.0f, snake->getSprite(), 0.2f) ||
+			Collision::checkSpriteCollision(qbert->getSprite(), 1.0f, redBalls[0]->getSprite(), 0.15f) ||
+			Collision::checkSpriteCollision(qbert->getSprite(), 1.0f, redBalls[1]->getSprite(), 0.15f)) {
+			qbert->setSwear();
+			data->assets.getSound("Swear").play();
+			qbert->update();
+			swearCounter = 100;
 		}
 	}
 
 	void GameState::updateEnemies() {
-		if (_onDisc[0] || _onDisc[1]) {
-			_snake->update(_boxes, _oldQbertPos);
+		if (onDisc[0] || onDisc[1]) {
+			snake->update(boxes, oldQbertPos);
 		} else {
-			_snake->update(_boxes, _Qbert->getPos());
+			snake->update(boxes, qbert->getPos());
 		}
-		_redBalls[0]->update(_boxes, _Qbert->getPos());
-		_redBalls[1]->update(_boxes, _Qbert->getPos());
+		redBalls[0]->update(boxes, qbert->getPos());
+		redBalls[1]->update(boxes, qbert->getPos());
 
-		if (_snake->land() && !_snake->fell()) {
+		if (snake->land() && !snake->getFell()) {
 			bool collided = false;
-			for (int i = 0; i < _boxes.size(); i++) {
-				if (_boxes[i]->contains(_snake->getPos() + sf::Vector2f(0.0f, 10.0f))) {
-					if (_snake->egg()) {
-						_data->assets.getSound("Snake_egg_jump").play();
+			for (int i = 0; i < boxes.size(); i++) {
+				if (boxes[i]->contains(snake->getPos() + sf::Vector2f(0.0f, 10.0f))) {
+					if (snake->getEgg()) {
+						data->assets.getSound("Snake_egg_jump").play();
 					} else {
-						_data->assets.getSound("Snake_jump").play();
+						data->assets.getSound("Snake_jump").play();
 					}
 					collided = true;
 					break;
 				}
 			}
 			if (collided == false) {
-				_data->assets.getSound("Snake_fall").play();
-				_snake->drop();
+				data->assets.getSound("Snake_fall").play();
+				snake->setFell();
 			}
 		}
 
 		for (int i = 0; i < AMOUNT_OF_RED_BALLS; i++) {
-			if (_redBalls[i]->land()) {
+			if (redBalls[i]->land()) {
 				bool collided = false;
-				for (int j = 0; j < _boxes.size(); j++) {
-					if (_boxes[j]->contains(_redBalls[i]->getPos() + sf::Vector2f(0.0f, 15.0f))) {
-						_data->assets.getSound("Red_ball_jump").play();
+				for (int j = 0; j < boxes.size(); j++) {
+					if (boxes[j]->contains(redBalls[i]->getPos() + sf::Vector2f(0.0f, 15.0f))) {
+						data->assets.getSound("Red_ball_jump").play();
 						collided = true;
 						break;
 					}
 				}
 				if (collided == false) {
-					_redBalls[i]->drop();
+					redBalls[i]->setFell();
 				}
 			}
 		}
@@ -275,33 +276,33 @@ namespace Game {
 
 
 	void GameState::win() {
-		for (int i = 0; i < _boxes.size(); i++) {
-			_boxes[i]->animation();
+		for (int i = 0; i < boxes.size(); i++) {
+			boxes[i]->animation();
 		}
-		_hud.win();
-		_winTimer--;
-		if (_winTimer <= 0) {
+		hud.win();
+		winTimer--;
+		if (winTimer <= 0) {
 			this->reset();
 		}
 	}
 
 
 	void GameState::reset() {
-		_Qbert->reset();
-		_snake->reset(true);
-		_redBalls[0]->reset(true);
-		_redBalls[1]->reset(true);
-		_discs[0]->reset(FLYING_DISC_POSITION_01);
-		_discs[1]->reset(FLYING_DISC_POSITION_02);
-		_hud.reset();
-		for (int i = 0; i < _boxes.size(); i++) {
-			_boxes[i]->reset();
+		qbert->reset();
+		snake->reset(true);
+		redBalls[0]->reset(true);
+		redBalls[1]->reset(true);
+		discs[0]->reset(FLYING_DISC_POSITION_01);
+		discs[1]->reset(FLYING_DISC_POSITION_02);
+		hud.reset();
+		for (int i = 0; i < boxes.size(); i++) {
+			boxes[i]->reset();
 		}
-		_boxesHit = 0;
-		_onDisc[0] = false;
-		_onDisc[1] = false;
-		_win = false;
-		_winTimer = 150;
+		boxesHit = 0;
+		onDisc[0] = false;
+		onDisc[1] = false;
+		won = false;
+		winTimer = 150;
 	}
 
 }

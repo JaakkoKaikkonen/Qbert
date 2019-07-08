@@ -12,7 +12,7 @@ namespace Game {
 	public:
 		RedBall(gameDataRef data, int spawnDelay);
 
-		void update(std::array<Box*, 28>& boxes, sf::Vector2f QbertPos) override;
+		void update(std::array<Box*, 28>& boxes, sf::Vector2f qbertPos) override;
 
 		void reset(bool gameOver) override;
 

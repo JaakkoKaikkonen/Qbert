@@ -25,51 +25,51 @@ namespace Game {
 
 		void draw();
 
-		void drop() { _fell = true; }
+		void setFell() { fell = true; }
 
-		void swear() { _swear = true; }
+		void setSwear() { swear = true; }
 
-		void fellFromLastRow() { _fellFromLastRow = true; }
+		void setFellFromLastRow() { fellFromLastRow = true; }
 
-		bool getSwear() { return _swear; }
+		bool getSwear() { return swear; }
 
-		sf::Rect<float> getGlobalBounds() { return _Qbert.getGlobalBounds(); }
+		sf::Rect<float> getGlobalBounds() { return qbert.getGlobalBounds(); }
 
-		sf::Vector2f getPos() { return _Qbert.getPosition(); }
+		sf::Vector2f getPos() { return qbert.getPosition(); }
 
-		sf::Sprite& getSprite() { return _Qbert; }
+		sf::Sprite& getSprite() { return qbert; }
 
-		bool fell() { return _fell; }
+		bool getFell() { return fell; }
 
-		bool returnFellFromLastRow() { return _fellFromLastRow; }
+		bool getFellFromLastRow() { return fellFromLastRow; }
 
 	private:
 		void animate();
 
 	private:
-		gameDataRef _data;
+		gameDataRef data;
 
-		sf::Sprite _Qbert;
+		sf::Sprite qbert;
 
-		sf::Sprite _swearSprite;
+		sf::Sprite swearSprite;
 
-		Dir _dir = Dir::Down;
+		Dir dir = Dir::Down;
 
-		int _jumpCounter = 0;
+		int jumpCounter = 0;
 
-		int _jumpTimer = 0;
+		int jumpTimer = 0;
 
-		bool _fell = false;
+		bool fell = false;
 
-		bool _fellFromLastRow = false;
+		bool fellFromLastRow = false;
 
-		bool _swear = false;
+		bool swear = false;
 
-		int _swearCounter = 0;
+		int swearCounter = 0;
 
 		float x, y;
 
-		sf::Vector2f _jumpStartPos;
+		sf::Vector2f jumpStartPos;
 
 	};
 

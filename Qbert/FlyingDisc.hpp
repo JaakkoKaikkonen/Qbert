@@ -20,24 +20,24 @@ namespace Game {
 
 		void draw();
 
-		sf::Vector2f getPos() { return _disc.getPosition(); }
+		sf::Vector2f getPos() { return disc.getPosition(); }
 
 	private:
-		gameDataRef _data;
+		gameDataRef data;
 
-		sf::Sprite _disc;
+		sf::Sprite disc;
 
-		sf::IntRect _discAnimationFrames[4] = { FLYING_DISC_01, FLYING_DISC_02, FLYING_DISC_03, FLYING_DISC_04 };
+		sf::IntRect discAnimationFrames[4] = { FLYING_DISC_01, FLYING_DISC_02, FLYING_DISC_03, FLYING_DISC_04 };
 
-		Animation _discAnimation;
+		Animation discAnimation;
 
-		sf::Vector2f _moveVector;
+		sf::Vector2f moveVector;
 
-		bool _done = false;
+		bool done = false;
 
-		int _waitCounter = 30;
+		int waitCounter = 30;
 
-		int _upCounter = 20;
+		int upCounter = 20;
 	};
 
 }

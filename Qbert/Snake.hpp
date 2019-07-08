@@ -14,20 +14,20 @@ namespace Game {
 	public:
 		Snake(gameDataRef data, HUD* hud, int spawnDelay);
 
-		void update(std::array<Box*, AMOUNT_OF_BOXES>& boxes, sf::Vector2f QbertPos) override;
+		void update(std::array<Box*, AMOUNT_OF_BOXES>& boxes, sf::Vector2f qbertPos) override;
 
 		void reset(bool gameOver) override;
 
 		void animate() override;
 
-		bool egg() { return _egg; }
+		bool getEgg() { return egg; }
 
 	private:
-		bool _egg = true;
+		bool egg = true;
 
-		bool _eggHatch = false;
+		bool eggHatch = false;
 
-		HUD* _hud;
+		HUD* hud;
 
 	};
 

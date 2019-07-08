@@ -3,87 +3,91 @@
 namespace Game {
 
 	HUD::HUD(gameDataRef data)
-		: _data(data), _playerText(_data->assets.getTexture("Player_text"), PLAYER_TEXT_01), _playerTextAnimation(_playerText, _playerTextAnimationFrames, 6, 0.6f),
-		  _playerIndex(_data->assets.getTexture("HUD"), PLAYER_INDEX_YELLOW), _playerIndexAnimation(_playerIndex, _playerIndexAnimationFrames, 3, 0.25f),
-		  _score("0", _data->assets.getFont("Font"), 20),
-		  _changeTo("CHANGE TO:", _data->assets.getFont("Font"), 11), _changeToBox(_data->assets.getTexture("Boxes"), CHANGE_TO_BOX_YELLOW), 
-		  _changeToBoxAnimation(_changeToBox, _changeToBoxAnimationFrames, 3, 0.25f)
+		: data(data),
+		  playerText(this->data->assets.getTexture("Player_text"), PLAYER_TEXT_01),
+		  playerTextAnimation(playerText, playerTextAnimationFrames, 6, 0.6f),
+		  playerIndex(this->data->assets.getTexture("HUD"), PLAYER_INDEX_YELLOW),
+		  playerIndexAnimation(playerIndex, playerIndexAnimationFrames, 3, 0.25f),
+		  score("0", this->data->assets.getFont("Font"), 20),
+		  changeTo("CHANGE TO:", this->data->assets.getFont("Font"), 11),
+		  changeToBox(this->data->assets.getTexture("Boxes"), CHANGE_TO_BOX_YELLOW), 
+		  changeToBoxAnimation(changeToBox, changeToBoxAnimationFrames, 3, 0.25f)
 	{
-		_playerText.setScale(2.0f, 2.0f);
-		_playerText.setPosition(20.0f, 20.0f);
+		playerText.setScale(2.0f, 2.0f);
+		playerText.setPosition(20.0f, 20.0f);
 
-		_playerIndex.setScale(2.0f, 2.0f);
-		_playerIndex.setPosition(132.0f, 15.0f);
+		playerIndex.setScale(2.0f, 2.0f);
+		playerIndex.setPosition(132.0f, 15.0f);
 
-		_score.setFillColor(sf::Color(255, 119, 0));
-		_score.setPosition(20.0f, 40.0f);
+		score.setFillColor(sf::Color(255, 119, 0));
+		score.setPosition(20.0f, 40.0f);
 
-		_changeTo.setFillColor(sf::Color::Red);
-		_changeTo.setPosition(20.0f, 83.0f);
+		changeTo.setFillColor(sf::Color::Red);
+		changeTo.setPosition(20.0f, 83.0f);
 
-		_changeToBox.setScale(2.0f, 2.0f);
-		_changeToBox.setPosition(58.0f, 102.0f);
+		changeToBox.setScale(2.0f, 2.0f);
+		changeToBox.setPosition(58.0f, 102.0f);
 
 
 		for (int i = 0; i < 4; i++) {
-			_arrows[i].setTexture(_data->assets.getTexture("HUD"));
-			_arrows[i].setTextureRect(i % 2 == 0 ? ARROW_RIGHT : ARROW_LEFT);
-			_arrows[i].setScale(2.0f, 2.0f);
+			arrows[i].setTexture(this->data->assets.getTexture("HUD"));
+			arrows[i].setTextureRect(i % 2 == 0 ? ARROW_RIGHT : ARROW_LEFT);
+			arrows[i].setScale(2.0f, 2.0f);
 			if (i % 2 == 0) {
-				_arrows[i].setPosition(20.0f + 9.0f*i, 106.0f);
+				arrows[i].setPosition(20.0f + 9.0f*i, 106.0f);
 			} else {
-				_arrows[i].setPosition(118.0f - 9.0f*i, 106.0f);
+				arrows[i].setPosition(118.0f - 9.0f*i, 106.0f);
 			}
 		}
 	}
 
 
 	void HUD::addToScore(int score) {
-		_score.setString(std::to_string(std::stoi((std::string)_score.getString()) + score));
+		this->score.setString(std::to_string(std::stoi((std::string)this->score.getString()) + score));
 	}
 
 	void HUD::update() {
-		_playerTextAnimation.animate();
+		playerTextAnimation.animate();
 
-		_arrowTimer++;
-		if (_arrowTimer > 15) {
-			if (_arrowCount == 4) {
-				_arrowCount = 0;
+		arrowTimer++;
+		if (arrowTimer > 15) {
+			if (arrowCount == 4) {
+				arrowCount = 0;
 			} else {
-				_arrowCount += 2;
+				arrowCount += 2;
 			}
-			_arrowTimer = 0;
+			arrowTimer = 0;
 		}
 	}
 
 	void HUD::win() {
-		_arrowCount = 4;
-		_changeToBoxAnimation.animate();
-		_playerIndexAnimation.animate();
+		arrowCount = 4;
+		changeToBoxAnimation.animate();
+		playerIndexAnimation.animate();
 	}
 
 
 	void HUD::reset() {
-		_score.setString("0");
-		_changeToBox.setTextureRect(CHANGE_TO_BOX_YELLOW);
-		_playerIndex.setTextureRect(PLAYER_INDEX_YELLOW);
+		score.setString("0");
+		changeToBox.setTextureRect(CHANGE_TO_BOX_YELLOW);
+		playerIndex.setTextureRect(PLAYER_INDEX_YELLOW);
 	}
 
 	void HUD::draw() {
 
-		_data->window.draw(_playerText);
+		data->window.draw(playerText);
 
-		_data->window.draw(_playerIndex);
+		data->window.draw(playerIndex);
 
-		_data->window.draw(_score);
+		data->window.draw(score);
 
-		_data->window.draw(_changeTo);
+		data->window.draw(changeTo);
 
-		_data->window.draw(_changeToBox);
+		data->window.draw(changeToBox);
 
 
-		for (int i = 0; i < _arrowCount; i++) {
-			_data->window.draw(_arrows[i]);
+		for (int i = 0; i < arrowCount; i++) {
+			data->window.draw(arrows[i]);
 		}
 
 	}

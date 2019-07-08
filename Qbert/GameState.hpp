@@ -44,33 +44,33 @@ namespace Game {
 		void reset();
 
 	private:
-		gameDataRef _data;
+		gameDataRef data;
 
-		HUD _hud;
+		HUD hud;
 
-		std::array<Box*, AMOUNT_OF_BOXES> _boxes;
+		std::array<Box*, AMOUNT_OF_BOXES> boxes;
 
-		int _boxesHit = 0;
+		int boxesHit = 0;
 
-		Qbert* _Qbert;
+		Qbert* qbert;
 
-		Snake* _snake;
+		Snake* snake;
 
-		RedBall* _redBalls[AMOUNT_OF_RED_BALLS];
+		RedBall* redBalls[AMOUNT_OF_RED_BALLS];
 
-		FlyingDisc* _discs[2];
+		FlyingDisc* discs[2];
 
-		bool _onDisc[2] = { 0, 0 };
+		bool onDisc[2] = { 0, 0 };
 
-		sf::Vector2f _oldQbertPos;
+		sf::Vector2f oldQbertPos;
 
-		int _swearCounter = 0;
+		int swearCounter = 0;
 
-		bool _win = false;
+		bool won = false;
 
-		int _winTimer = 190;
+		int winTimer = 190;
 
-		sf::Color _backGroundColor = sf::Color::Black;
+		sf::Color backGroundColor = sf::Color::Black;
 
 	};
 

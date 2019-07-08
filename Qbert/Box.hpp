@@ -22,17 +22,17 @@ namespace Game {
 
 		void draw();
 
-		sf::Vector2f getPos() { return _box.getPosition(); }
+		sf::Vector2f getPos() { return box.getPosition(); }
 
 		
 	private:
-		gameDataRef _data;
+		gameDataRef data;
 
-		sf::Sprite _box;
+		sf::Sprite box;
 
-		sf::IntRect _changeColorAnimationFrames[3] = { BLUE_BOX, RED_BOX, YELLOW_BOX };
+		sf::IntRect changeColorAnimationFrames[3] = { BLUE_BOX, RED_BOX, YELLOW_BOX };
 
-		Animation _changeColorAnimation;
+		Animation changeColorAnimation;
 	};
 
 }
