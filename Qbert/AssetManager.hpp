@@ -10,8 +10,6 @@ namespace Game {
 	class AssetManager {
 
 	public:
-		AssetManager(){}
-
 		void loadTexture(std::string name, std::string fileName);
 		sf::Texture& getTexture(std::string name);
 
