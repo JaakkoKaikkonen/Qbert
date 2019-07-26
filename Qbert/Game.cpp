@@ -17,7 +17,7 @@ namespace Game {
 		data->window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
 		//Seed rng
-		srand(time(NULL));
+		srand((unsigned int)time(NULL));
 
 		//Load Resources ----------------------------------------------------------------------
 
@@ -47,7 +47,8 @@ namespace Game {
 
 		//-------------------------------------------------------------------------------------
 
-		data->machine.addState(stateRef(new GameState(data)), true);
+		data->state = new GameState(data);
+		data->state->init();
 
 		this->run();
 	}
@@ -55,16 +56,14 @@ namespace Game {
 	void Game::run() {
 		float newTime, frameTime;
 
-		float currentTime = this->clock.getElapsedTime().asSeconds();
+		float currentTime = clock.getElapsedTime().asSeconds();
 
 		float accumulator = dt;
 
 
 		while (this->data->window.isOpen()) {
 
-			this->data->machine.processStateChanges();
-
-			newTime = this->clock.getElapsedTime().asSeconds();
+			newTime = clock.getElapsedTime().asSeconds();
 
 			frameTime = newTime - currentTime;
 
@@ -78,10 +77,10 @@ namespace Game {
 
 			while (accumulator >= dt)
 			{
-				this->data->machine.getActiveState()->handleInput();
-				this->data->machine.getActiveState()->update();
+				data->state->handleInput();
+				data->state->update();
 
-				this->data->machine.getActiveState()->draw();
+				data->state->draw();
 
 				accumulator -= dt;
 			}
